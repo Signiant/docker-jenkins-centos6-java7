@@ -30,8 +30,8 @@ RUN wget http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-
   && gem install compass \
   && npm install -g npm@latest-2 \
   && npm install -g bower grunt grunt-cli phantomjs-prebuilt \
-  && npm install -g grunt-connect-proxy@0.1.10
-  && pip install awscli
+  && npm install -g grunt-connect-proxy@0.1.10 \
+  && pip install awscli \
   && yum clean all
 
 # Make sure anything/everything we put in the build user's home dir is owned correctly
