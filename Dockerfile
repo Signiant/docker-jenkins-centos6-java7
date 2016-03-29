@@ -21,23 +21,18 @@ COPY yum-packages.list /tmp/yum.packages.list
 RUN chmod +r /tmp/yum.packages.list \
   && yum install -y -q `cat /tmp/yum.packages.list`
 
-# Install jboss
+# Install jboss, compass, node/npm, and AWS CLI -- and clear the yum cache
+# NB: We have to use the fixed version of grunt-connect-proxy otherwise we get fatal socket hang up errors
 RUN wget http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA.zip/download -O /tmp/jboss-5.1.0.GA.zip \
   && unzip -q /tmp/jboss-5.1.0.GA.zip -d /usr/local \
-  && rm -f /tmp/jboss-5.1.0.GA.zip
-
-# Install Compass
-RUN gem update --system \
-  &&  gem install compass
-
-# Update node and npm
-# We have to use the fixed version of grunt-connect-proxy otherwise we get fatal socket hang up errors
-RUN npm install -g npm@latest-2 \
+  && rm -f /tmp/jboss-5.1.0.GA.zip \
+  && gem update --system \
+  && gem install compass \
+  && npm install -g npm@latest-2 \
   && npm install -g bower grunt grunt-cli phantomjs-prebuilt \
   && npm install -g grunt-connect-proxy@0.1.10
-
-# Install the AWS CLI - used by a few processes
-RUN pip install awscli
+  && pip install awscli
+  && yum clean all
 
 # Make sure anything/everything we put in the build user's home dir is owned correctly
 RUN chown -R $BUILD_USER:$BUILD_USER_GROUP /home/$BUILD_USER  
