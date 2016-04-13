@@ -29,7 +29,7 @@ RUN wget http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-
   && gem update --system \
   && gem install compass \
   && npm install -g npm@latest-2 \
-  && npm install -g bower grunt grunt-cli phantomjs-prebuilt \
+  && npm install -g bower grunt@0.4.1 grunt-cli phantomjs-prebuilt \
   && npm install -g grunt-connect-proxy@0.1.10 \
   && pip install awscli \
   && yum clean all
