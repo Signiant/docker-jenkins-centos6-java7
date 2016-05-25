@@ -16,11 +16,9 @@ RUN curl -fsSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binar
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 ENV MAVEN_HOME /usr/share/maven
 
-#rebuild rpmdb
-RUN rpm --rebuilddb
-
 # Install yum packages required for build node
 COPY yum-packages.list /tmp/yum.packages.list
+RUN yum clean all
 RUN yum install -y libXext-devel
 RUN chmod +r /tmp/yum.packages.list \
   && yum install -y -q `cat /tmp/yum.packages.list`
