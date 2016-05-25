@@ -18,6 +18,7 @@ ENV MAVEN_HOME /usr/share/maven
 
 # Install yum packages required for build node
 COPY yum-packages.list /tmp/yum.packages.list
+RUN yum install -y libXext-devel
 RUN chmod +r /tmp/yum.packages.list \
   && yum install -y -q `cat /tmp/yum.packages.list`
 
@@ -35,7 +36,7 @@ RUN wget http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-
   && yum clean all
 
 # Make sure anything/everything we put in the build user's home dir is owned correctly
-RUN chown -R $BUILD_USER:$BUILD_USER_GROUP /home/$BUILD_USER  
+RUN chown -R $BUILD_USER:$BUILD_USER_GROUP /home/$BUILD_USER
 
 EXPOSE 22
 
