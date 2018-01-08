@@ -18,10 +18,10 @@ ENV MAVEN_HOME /usr/share/maven
 
 # Install yum packages required for build node
 COPY yum-packages.list /tmp/yum.packages.list
-RUN yum clean all
-RUN yum install -y libXext-devel
 RUN chmod +r /tmp/yum.packages.list \
-  && yum install -y -q `cat /tmp/yum.packages.list`
+  && yum clean all \
+  && yum install -y -q `cat /tmp/yum.packages.list` \
+  && yum clean all
 
 # Install jboss, compass, node/npm, and AWS CLI -- and clear the yum cache
 # NB: We have to use the fixed version of grunt-connect-proxy otherwise we get fatal socket hang up errors
